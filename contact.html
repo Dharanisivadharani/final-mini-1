@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us - ShopSmart</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background:#f0f2f5; color:#333; }
+
+/* Header */
+header {
+  display:flex; justify-content:space-between; align-items:center; padding:15px 50px;
+  background:linear-gradient(90deg,#007BFF,#00C6FF); color:#fff; box-shadow:0 5px 15px rgba(0,0,0,0.2); border-bottom-left-radius:20px; border-bottom-right-radius:20px;
+}
+.logo { font-size:28px; font-weight:bold; color:#fff; cursor:pointer; transition:0.3s; }
+.logo:hover { color:#ffe600; }
+nav ul { list-style:none; display:flex; gap:25px; }
+nav ul li a { text-decoration:none; color:#fff; font-weight:600; transition:0.3s; }
+nav ul li a:hover { color:#ffe600; }
+.user-icon { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; margin-left:10px; cursor:pointer; transition:0.3s; }
+.user-icon.profile { background:linear-gradient(135deg,#ff6600,#ffcc00); color:#fff; }
+.user-icon.cart { background:linear-gradient(135deg,#00c6ff,#007BFF); color:#fff; }
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/1200x400?text=Contact+Us') center/cover no-repeat;
+  color:#fff; text-align:center; padding:140px 20px; border-bottom-left-radius:30px; border-bottom-right-radius:30px; box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+.hero h2 { font-size:50px; margin-bottom:15px; text-shadow:2px 2px 8px rgba(0,0,0,0.5); }
+.hero p { font-size:22px; margin-bottom:30px; text-shadow:1px 1px 6px rgba(0,0,0,0.5); }
+.hero a { padding:15px 40px; text-decoration:none; font-weight:bold; color:#007BFF; background:#fff; border-radius:50px; box-shadow:0 5px 15px rgba(0,0,0,0.2); transition:0.3s; display:inline-block; }
+.hero a:hover { background:#ffe600; color:#007BFF; }
+
+/* Contact Section */
+.contact-section { display:flex; justify-content:space-between; gap:50px; padding:60px 10%; flex-wrap:wrap; }
+.contact-info, .contact-form { flex:1; min-width:300px; background:#fff; padding:30px; border-radius:20px; box-shadow:0 6px 18px rgba(0,0,0,0.15); transition:0.3s; }
+.contact-info h3, .contact-form h3 { color:#007BFF; margin-bottom:20px; font-size:24px; text-align:center; }
+.info-item { display:flex; align-items:center; gap:15px; margin-bottom:18px; }
+.info-item i { background:#007BFF; color:#fff; padding:12px; border-radius:50%; font-size:18px; }
+.info-item p { font-size:16px; color:#444; }
+.contact-form input, .contact-form textarea {
+  width:100%; padding:12px; margin-bottom:15px; border:1px solid #ccc; border-radius:10px; font-size:16px; transition:0.3s;
+}
+.contact-form input:focus, .contact-form textarea:focus { border-color:#007BFF; outline:none; }
+.contact-form button {
+  background:#007BFF; color:#fff; border:none; padding:12px 28px; border-radius:50px; font-size:16px; cursor:pointer; font-weight:bold; transition:0.3s; display:block; margin:0 auto;
+}
+.contact-form button:hover { background:#00c6ff; transform:scale(1.05); }
+
+/* Map */
+.map { width:100%; height:350px; margin-top:50px; border:none; border-radius:20px; box-shadow:0 6px 18px rgba(0,0,0,0.15); }
+
+/* Footer */
+footer { background:linear-gradient(135deg,#007BFF,#00C6FF); color:#fff; text-align:center; padding:60px 20px 40px; border-top-left-radius:30px; border-top-right-radius:30px; }
+footer h4 { margin-bottom:20px; font-size:22px; }
+footer p, footer a { color:#fff; text-decoration:none; font-size:14px; }
+footer a:hover { text-decoration:underline; }
+footer .footer-grid { display:flex; flex-wrap:wrap; justify-content:space-around; margin-bottom:30px; }
+footer .footer-col { flex:1 1 200px; margin:15px; text-align:left; }
+footer .socials { margin-top:15px; }
+footer .socials a { margin-right:10px; display:inline-block; color:#fff; font-size:18px; transition:0.3s; }
+footer .socials a:hover { color:#ffe600; }
+footer p.copyright { margin-top:20px; font-size:13px; }
+
+/* Responsive */
+@media(max-width:768px){
+  .hero h2 { font-size:36px; }
+  .hero p { font-size:18px; }
+  header { flex-direction:column; gap:15px; }
+  nav ul { flex-wrap:wrap; justify-content:center; gap:15px; }
+  .contact-section { flex-direction:column; gap:30px; }
+}
+</style>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+  <div class="logo" onclick="location.href='index.html'">ShopSmart</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+  <div style="display:flex; align-items:center;">
+    <div class="user-icon profile" onclick="goProfile()">U</div>
+    <div class="user-icon cart" onclick="location.href='cart.html'">🛒 <span id="cartCount">0</span></div>
+  </div>
+</header>
+
+<section class="hero">
+  <h2>Get in Touch</h2>
+  <p>We are here to help! Contact us for queries, orders, or support.</p>
+  <a href="products.html">Shop Now</a>
+</section>
+
+<section class="contact-section">
+  <div class="contact-info">
+    <h3>Contact Details</h3>
+    <div class="info-item"><i class="fas fa-map-marker-alt"></i><p>123 Tech Street, Bangalore, India</p></div>
+    <div class="info-item"><i class="fas fa-phone-alt"></i><p>+91 93610 87282</p></div>
+    <div class="info-item"><i class="fas fa-envelope"></i><p>sivadharani1971@gmail.com</p></div>
+    <div class="info-item"><i class="fas fa-clock"></i><p>Mon – Sat: 9:00 AM to 8:00 PM</p></div>
+  </div>
+
+  <div class="contact-form">
+    <h3>Send a Message</h3>
+    <form id="contactForm">
+      <input type="text" id="contactName" placeholder="Your Name" required>
+      <input type="email" id="contactEmail" placeholder="Your Email" required>
+      <input type="text" id="contactPhone" placeholder="Your Phone" required>
+      <input type="text" id="contactSubject" placeholder="Subject" required>
+      <textarea id="contactMessage" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<div style="padding:0 10%; margin-top:40px;">
+  <iframe class="map" 
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.668855967568!2d77.59456241523295!3d12.971598690861097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1670f5e9e18f%3A0x497b446ef73d88!2sBangalore!5e0!3m2!1sen!2sin!4v1688984721372!5m2!1sen!2sin" 
+    allowfullscreen="" loading="lazy">
+  </iframe>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>ShopSmart</h4>
+      <p>Your one-stop store for home appliances</p>
+      <div class="socials">
+        <a href="#">🌐</a>
+        <a href="#">🐦</a>
+        <a href="#">📘</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Links</h4>
+      <p><a href="index.html">Home</a></p>
+      <p><a href="products.html">Products</a></p>
+      <p><a href="about.html">About Us</a></p>
+      <p><a href="contact.html">Contact</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>123 Tech Street, Bangalore, India</p>
+      <p>Email: support@shopsmart.com</p>
+      <p>Phone: +91 98765 43210</p>
+    </div>
+  </div>
+  <p class="copyright">&copy; 2025 ShopSmart. All Rights Reserved.</p>
+</footer>
+
+<script>
+function goProfile(){
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  if(user){ window.location.href="profile.html"; }
+  else{ window.location.href="login.html"; }
+}
+
+// Send message to Email and WhatsApp
+document.getElementById("contactForm").addEventListener("submit", function(event){
+  event.preventDefault();
+
+  const name = document.getElementById("contactName").value.trim();
+  const email = document.getElementById("contactEmail").value.trim();
+  const phone = document.getElementById("contactPhone").value.trim();
+  const subject = document.getElementById("contactSubject").value.trim();
+  const message = document.getElementById("contactMessage").value.trim();
+
+  if(!name || !email || !phone || !subject || !message){
+    alert("⚠️ Please fill all fields.");
+    return;
+  }
+
+  // Email
+  const storeEmail = "sivadharani1971@gmail.com";
+  const emailBody = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage:\n${message}`;
+  const mailtoLink = `mailto:${storeEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+
+  // WhatsApp
+  const whatsappNumber = "919361087282"; // only numbers, no '+'
+  const whatsappMsg = `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nMessage: ${message}`;
+  const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMsg)}`;
+
+  // Open Email and WhatsApp
+  window.open(mailtoLink, "_blank");
+  window.open(whatsappLink, "_blank");
+
+  // Optional: alert success
+  alert("Your message is being sent via Email and WhatsApp!");
+});
+</script>
+
+</body>
+</html>

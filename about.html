@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us - ShopSmart</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background:#f0f2f5; color:#333; }
+
+header {
+  display:flex; justify-content:space-between; align-items:center; padding:15px 50px; 
+  background:linear-gradient(90deg,#007BFF,#00C6FF); color:#fff; box-shadow:0 5px 15px rgba(0,0,0,0.2); border-bottom-left-radius:20px; border-bottom-right-radius:20px;
+}
+.logo { font-size:28px; font-weight:bold; color:#fff; cursor:pointer; transition:0.3s; }
+.logo:hover { color:#ffe600; }
+nav ul { list-style:none; display:flex; gap:25px; }
+nav ul li a { text-decoration:none; color:#fff; font-weight:600; transition:0.3s; }
+nav ul li a:hover { color:#ffe600; }
+.user-icon { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; margin-left:10px; cursor:pointer; transition:0.3s; }
+.user-icon.profile { background:linear-gradient(135deg,#ff6600,#ffcc00); color:#fff; }
+.user-icon.cart { background:linear-gradient(135deg,#00c6ff,#007BFF); color:#fff; }
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://via.placeholder.com/1200x400?text=About+Us') center/cover no-repeat;
+  color:#fff; text-align:center; padding:160px 20px; border-bottom-left-radius:30px; border-bottom-right-radius:30px; box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+.hero h2 { font-size:50px; margin-bottom:15px; text-shadow:2px 2px 8px rgba(0,0,0,0.5); }
+.hero p { font-size:22px; margin-bottom:30px; text-shadow:1px 1px 6px rgba(0,0,0,0.5); }
+.hero a { padding:15px 40px; text-decoration:none; font-weight:bold; color:#007BFF; background:#fff; border-radius:50px; box-shadow:0 5px 15px rgba(0,0,0,0.2); transition:0.3s; display:inline-block; }
+.hero a:hover { background:#ffe600; color:#007BFF; }
+
+/* About Section */
+.about-section { display:flex; justify-content:space-between; align-items:center; gap:50px; padding:60px 10%; flex-wrap:wrap; }
+.about-text { flex:1; min-width:300px; }
+.about-text h3 { font-size:32px; color:#007BFF; margin-bottom:20px; }
+.about-text p { font-size:17px; color:#444; line-height:1.7; margin-bottom:15px; }
+.about-text button {
+  background:#007BFF; color:#fff; border:none; padding:12px 28px; border-radius:50px; cursor:pointer; font-size:16px; font-weight:bold; transition:0.3s;
+}
+.about-text button:hover { background:#00c6ff; }
+
+.about-image { flex:1; min-width:300px; text-align:center; }
+.about-image img { width:100%; border-radius:20px; box-shadow:0 6px 18px rgba(0,0,0,0.15); transition:0.5s; }
+.about-image img:hover { transform:scale(1.05); }
+
+/* Values Section */
+.values-section { background:#e0f7ff; padding:60px 10%; text-align:center; }
+.values-section h3 { font-size:32px; margin-bottom:40px; color:#007BFF; }
+.values-grid { display:flex; flex-wrap:wrap; justify-content:center; gap:30px; }
+.value-card { background:#fff; padding:25px; border-radius:20px; width:260px; box-shadow:0 5px 20px rgba(0,0,0,0.15); transition:0.3s; }
+.value-card:hover { transform:translateY(-5px); box-shadow:0 10px 25px rgba(0,0,0,0.2); }
+.value-card h4 { color:#007BFF; margin-bottom:12px; font-size:20px; }
+.value-card p { color:#444; font-size:15px; line-height:1.6; }
+
+/* Footer */
+footer { background:linear-gradient(135deg,#007BFF,#00C6FF); color:#fff; text-align:center; padding:60px 20px 40px; border-top-left-radius:30px; border-top-right-radius:30px; }
+footer h4 { margin-bottom:20px; font-size:22px; }
+footer p, footer a { color:#fff; text-decoration:none; font-size:14px; }
+footer a:hover { text-decoration:underline; }
+footer .footer-grid { display:flex; flex-wrap:wrap; justify-content:space-around; margin-bottom:30px; }
+footer .footer-col { flex:1 1 200px; margin:15px; text-align:left; }
+footer .socials { margin-top:15px; }
+footer .socials a { margin-right:10px; display:inline-block; color:#fff; font-size:18px; transition:0.3s; }
+footer .socials a:hover { color:#ffe600; }
+footer p.copyright { margin-top:20px; font-size:13px; }
+
+/* Responsive */
+@media(max-width:768px){
+  .hero h2 { font-size:36px; }
+  .hero p { font-size:18px; }
+  header { flex-direction:column; gap:15px; }
+  nav ul { flex-wrap:wrap; justify-content:center; gap:15px; }
+  .about-section { flex-direction:column; gap:30px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" onclick="location.href='index.html'">ShopSmart</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+  <div style="display:flex; align-items:center;">
+    <div class="user-icon profile" onclick="goProfile()">U</div>
+    <div class="user-icon cart" onclick="location.href='cart.html'">🛒 <span id="cartCount">0</span></div>
+  </div>
+</header>
+
+<section class="hero">
+  <h2>About ShopSmart</h2>
+  <p>Discover our story, mission, and the values that make us a trusted brand.</p>
+  <a href="products.html">Explore Products</a>
+</section>
+
+<section class="about-section">
+  <div class="about-text">
+    <h3>Welcome to ShopSmart</h3>
+    <p>At ShopSmart, we deliver high-quality home appliances and electronics that make life simpler and smarter. Our team is committed to providing top-notch service and ensuring every product meets the highest standards.</p>
+    <p>With years of experience and trusted brands, we ensure a seamless shopping experience from our store to your home.</p>
+    <button onclick="location.href='products.html'">Shop Now</button>
+  </div>
+  <div class="about-image">
+    <img src="https://via.placeholder.com/500x400?text=Our+Showroom" alt="Our Showroom">
+  </div>
+</section>
+
+<section class="values-section">
+  <h3>Our Values</h3>
+  <div class="values-grid">
+    <div class="value-card">
+      <h4>Quality Products</h4>
+      <p>We select only the best products to ensure quality, reliability, and performance.</p>
+    </div>
+    <div class="value-card">
+      <h4>Customer Satisfaction</h4>
+      <p>Our customers are our priority, and we provide friendly and reliable service.</p>
+    </div>
+    <div class="value-card">
+      <h4>Innovation</h4>
+      <p>We bring the latest technology and modern appliances to your doorstep.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>ShopSmart</h4>
+      <p>Your one-stop store for home appliances</p>
+      <div class="socials">
+        <a href="#">🌐</a>
+        <a href="#">🐦</a>
+        <a href="#">📘</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Links</h4>
+      <p><a href="index.html">Home</a></p>
+      <p><a href="products.html">Products</a></p>
+      <p><a href="about.html">About Us</a></p>
+      <p><a href="contact.html">Contact</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>123 Tech Street, Bangalore, India</p>
+      <p>Email: support@shopsmart.com</p>
+      <p>Phone: +91 98765 43210</p>
+    </div>
+  </div>
+  <p class="copyright">&copy; 2025 ShopSmart. All Rights Reserved.</p>
+</footer>
+
+<script>
+function goProfile(){
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  if(user){ window.location.href="profile.html"; }
+  else{ window.location.href="login.html"; }
+}
+</script>
+</body>
+</html>

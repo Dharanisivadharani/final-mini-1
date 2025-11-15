@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Confirmation - ShopSmart</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(to bottom, #e0f7ff, #f0f2f5);
+    margin: 0;
+}
+
+/* Navbar */
+header {
+    background: linear-gradient(90deg, #007BFF, #00C6FF);
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+header .logo {
+    font-size: 28px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+}
+header .logo:hover { color: #ffe600; }
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: 600;
+    transition: 0.3s;
+}
+nav ul li a:hover { color: #ffe600; }
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-left: 10px;
+    cursor: pointer;
+    background: linear-gradient(135deg,#00c6ff,#007BFF);
+    color: #fff;
+    transition: 0.3s;
+}
+.user-icon:hover { transform: scale(1.1); }
+
+/* Confirmation Container */
+.confirm-container {
+    max-width: 950px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 40px 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+.confirm-container h2 {
+    color: #28a745;
+    font-size: 36px;
+    margin-bottom: 30px;
+    text-align: center;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Invoice Table */
+.invoice-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+.invoice-table th, .invoice-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+.invoice-table th {
+    background: #007BFF;
+    color: #fff;
+    font-weight: 600;
+}
+.invoice-table td {
+    background: #f9f9f9;
+}
+.invoice-summary td {
+    font-weight: bold;
+}
+
+/* Customer & Shop Info */
+.info-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+.info-box {
+    width: 48%;
+    background: #f0f8ff;
+    padding: 15px 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+}
+.info-box h4 {
+    margin-bottom: 10px;
+    color: #007BFF;
+}
+.info-box p {
+    margin: 5px 0;
+    font-weight: 500;
+}
+
+/* Buttons */
+.action-btn {
+    padding: 15px 35px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 18px;
+    margin: 10px 5px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+.print-btn { background: linear-gradient(135deg,#28a745,#85e085); color:#fff; }
+.print-btn:hover { transform: scale(1.05); box-shadow: 0 12px 30px rgba(0,0,0,0.35); }
+.share-btn { background: linear-gradient(135deg,#ff6600,#ffcc00); color:#fff; }
+.share-btn:hover { transform: scale(1.05); box-shadow: 0 12px 30px rgba(0,0,0,0.35); }
+.home-btn { background: #007BFF; color:#fff; }
+.home-btn:hover { transform: scale(1.05); box-shadow: 0 12px 30px rgba(0,0,0,0.35); }
+
+/* Responsive */
+@media(max-width:800px){
+    .info-section { flex-direction: column; }
+    .info-box { width: 100%; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" onclick="location.href='index.html'">ShopSmart</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+  <div style="display:flex; align-items:center;">
+    <div class="user-icon" onclick="goProfile()">U</div>
+    <div class="user-icon">🛒 <span id="cartCount">0</span></div>
+  </div>
+</header>
+
+<div class="confirm-container">
+  <h2>🎉 Order Confirmed!</h2>
+  
+  <div class="info-section">
+    <div class="info-box" id="shopInfo">
+      <h4>Shop Information</h4>
+      <p><strong>Shop:</strong> ShopSmart</p>
+      <p><strong>Invoice No:</strong> <span id="invoiceNum"></span></p>
+      <p><strong>Date & Time:</strong> <span id="orderDate"></span></p>
+      <p><strong>Payment Method:</strong> <span id="paymentMethod"></span></p>
+    </div>
+    <div class="info-box" id="customerInfo">
+      <h4>Customer Information</h4>
+      <p><strong>Name:</strong> <span id="custName"></span></p>
+      <p><strong>Email:</strong> <span id="custEmail"></span></p>
+      <p><strong>Phone:</strong> <span id="custPhone"></span></p>
+      <p><strong>Address:</strong> <span id="custAddress"></span></p>
+    </div>
+  </div>
+  
+  <table class="invoice-table" id="invoiceTable">
+    <thead>
+      <tr>
+        <th>Item Name</th>
+        <th>Quantity</th>
+        <th>Price (₹)</th>
+        <th>Subtotal (₹)</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+    <tfoot>
+      <tr class="invoice-summary">
+        <td colspan="3">Total</td>
+        <td id="totalAmount"></td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <div style="text-align:center;">
+    <button class="action-btn print-btn" onclick="printBill()">🖨️ Print Bill</button>
+    <button class="action-btn share-btn" onclick="shareBill()">📤 Share Order</button>
+    <button class="action-btn home-btn" onclick="location.href='index.html'">🏠 Back to Home</button>
+  </div>
+</div>
+
+<script>
+// Fetch orders & customer info
+const orders = JSON.parse(localStorage.getItem("orders")) || [];
+const customerInfo = JSON.parse(localStorage.getItem("customerInfo")) || {name:'', email:'', phone:'', address:''};
+
+// Generate invoice
+if(orders.length>0){
+  const lastOrder = orders[orders.length-1];
+  const invoiceNum = "SS"+Date.now();
+  
+  // Fill Shop Info
+  document.getElementById("invoiceNum").innerText = invoiceNum;
+  document.getElementById("orderDate").innerText = lastOrder.dateTime;
+  document.getElementById("paymentMethod").innerText = lastOrder.payment;
+
+  // Fill Customer Info
+  document.getElementById("custName").innerText = customerInfo.name;
+  document.getElementById("custEmail").innerText = customerInfo.email;
+  document.getElementById("custPhone").innerText = customerInfo.phone;
+  document.getElementById("custAddress").innerText = customerInfo.address;
+
+  // Fill Items Table
+  const tbody = document.querySelector("#invoiceTable tbody");
+  let total = 0;
+  lastOrder.cart.forEach(item=>{
+    const subtotal = item.price * item.quantity;
+    total += subtotal;
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${item.name}</td><td>${item.quantity}</td><td>${item.price.toLocaleString()}</td><td>${subtotal.toLocaleString()}</td>`;
+    tbody.appendChild(tr);
+  });
+  document.getElementById("totalAmount").innerText = total.toLocaleString();
+
+  // Prepare text for sharing
+  let orderText = `ShopSmart Order\nInvoice: ${invoiceNum}\nDate: ${lastOrder.dateTime}\n\nCustomer: ${customerInfo.name}\nEmail: ${customerInfo.email}\nPhone: ${customerInfo.phone}\nAddress: ${customerInfo.address}\n\nItems:\n`;
+  lastOrder.cart.forEach(item=>{
+    orderText += `${item.name} x ${item.quantity} - ₹${(item.price*item.quantity).toLocaleString()}\n`;
+  });
+  orderText += `\nTotal: ₹${total.toLocaleString()}\nPayment: ${lastOrder.payment}`;
+  window.shareText = orderText; // Global for share function
+}
+
+// Navbar profile
+function goProfile(){
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  if(user){ window.location.href="profile.html"; }
+  else{ window.location.href="login.html"; }
+}
+
+// Cart count
+function updateCartCount(){
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const count = cart.reduce((sum,item)=>sum+item.quantity,0);
+  document.getElementById("cartCount").innerText = count;
+}
+updateCartCount();
+
+// Print Bill
+function printBill(){ window.print(); }
+
+// Share Bill
+function shareBill(){
+  if(navigator.share && window.shareText){
+    navigator.share({title:'ShopSmart Order', text: window.shareText, url: window.location.href})
+    .then(()=> console.log('Shared successfully'))
+    .catch(err => console.log('Share cancelled:', err));
+  } else {
+    alert("Share not supported on this device. You can copy the order manually.");
+  }
+}
+</script>
+</body>
+</html>

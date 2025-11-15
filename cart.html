@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart - ShopSmart</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background:#f0f2f5; color:#333; }
+
+/* Navbar */
+header {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:15px 50px; background: linear-gradient(90deg,#007BFF,#00C6FF);
+  color:#fff; box-shadow:0 5px 15px rgba(0,0,0,0.2); border-bottom-left-radius:20px; border-bottom-right-radius:20px;
+}
+.logo { font-size:28px; font-weight:bold; cursor:pointer; transition:0.3s; }
+.logo:hover { color:#ffe600; }
+nav ul { list-style:none; display:flex; gap:25px; }
+nav ul li a { text-decoration:none; color:#fff; font-weight:600; transition:0.3s; }
+nav ul li a:hover { color:#ffe600; }
+.user-icon { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; margin-left:10px; cursor:pointer; transition:0.3s; }
+.user-icon.profile { background: linear-gradient(135deg,#ff6600,#ffcc00); color:#fff; }
+.user-icon.cart { background: linear-gradient(135deg,#00c6ff,#007BFF); color:#fff; }
+
+/* Cart Container */
+.cart-container {
+  max-width:900px; margin:50px auto; background:#fff; padding:40px; border-radius:25px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+.cart-container h2 { text-align:center; color:#007BFF; margin-bottom:30px; font-size:32px; }
+.cart-items { margin-bottom:30px; display:flex; flex-direction:column; gap:15px; }
+.cart-item {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:15px; padding:15px; border-radius:15px; background:linear-gradient(135deg,#e0f7ff,#ffffff);
+  box-shadow:0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s;
+}
+.cart-item:hover { transform: translateY(-5px); box-shadow:0 10px 25px rgba(0,0,0,0.15); }
+.cart-item img { width:100px; height:100px; object-fit:cover; border-radius:15px; }
+.cart-item-details { flex:1; }
+.cart-item-details h4 { font-size:18px; color:#007BFF; margin-bottom:8px; }
+.cart-item-details p { font-weight:bold; font-size:16px; color:#ff6600; }
+.remove-btn {
+  background:#ff4d2d; color:#fff; border:none; padding:8px 16px; border-radius:50px;
+  cursor:pointer; font-weight:bold; transition:0.3s;
+}
+.remove-btn:hover { background:#e60000; transform:scale(1.05); }
+
+/* Customer Details */
+.customer-details {
+  background: linear-gradient(135deg,#fff4e6,#ffe6cc);
+  padding:25px; border-radius:20px; box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  margin-bottom:20px;
+}
+.customer-details h3 { color:#ff6600; margin-bottom:15px; }
+.customer-details label { font-weight:bold; display:block; margin:10px 0 5px; }
+.customer-details input, .customer-details textarea {
+  width:100%; padding:12px; border-radius:15px; border:1px solid #ccc;
+  box-shadow:0 5px 10px rgba(0,0,0,0.05); margin-bottom:15px; transition:0.3s;
+}
+.customer-details input:focus, .customer-details textarea:focus { outline:none; border-color:#ff6600; box-shadow:0 5px 15px rgba(255,102,0,0.2); }
+
+/* Total & Checkout */
+.total-price { font-size:22px; font-weight:bold; text-align:right; margin-top:20px; color:#007BFF; }
+.checkout-btn {
+  width:100%; padding:15px; border:none; border-radius:50px;
+  background:linear-gradient(135deg,#ff6600,#ffcc00); color:#fff; font-weight:bold;
+  font-size:18px; cursor:pointer; transition:all 0.3s; box-shadow:0 5px 20px rgba(0,0,0,0.2); display:block; margin-top:20px;
+}
+.checkout-btn:hover { background:linear-gradient(135deg,#ffcc00,#ff6600); transform:scale(1.05); }
+
+/* Responsive */
+@media(max-width:768px){
+  header { flex-direction:column; gap:15px; padding:15px 20px; }
+  nav ul { flex-wrap:wrap; justify-content:center; gap:15px; }
+  .cart-item { flex-direction:column; align-items:flex-start; }
+  .cart-item img { width:100%; height:auto; }
+  .cart-item-details { width:100%; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" onclick="location.href='index.html'">ShopSmart</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+  <div style="display:flex; align-items:center;">
+    <div class="user-icon profile" onclick="location.href='profile.html'">U</div>
+    <div class="user-icon cart">🛒 <span id="cartCount">0</span></div>
+  </div>
+</header>
+
+<div class="cart-container">
+  <h2>Your Cart</h2>
+  <div class="cart-items" id="cartItems"></div>
+
+  <div class="customer-details">
+    <h3>Customer Information</h3>
+    <label for="name">Full Name:</label>
+    <input type="text" id="name" placeholder="Enter your full name">
+    <label for="phone">Phone Number:</label>
+    <input type="text" id="phone" placeholder="Enter your phone number">
+    <label for="email">Email:</label>
+    <input type="email" id="email" placeholder="Enter your email address">
+    <label for="address">Shipping Address:</label>
+    <textarea id="address" rows="3" placeholder="Enter your shipping address"></textarea>
+  </div>
+
+  <p class="total-price" id="totalPrice"></p>
+  <button class="checkout-btn" id="checkoutBtn">Proceed to Checkout</button>
+</div>
+
+<script>
+// Load cart
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+const cartItemsDiv = document.getElementById("cartItems");
+
+function renderCart(){
+  cartItemsDiv.innerHTML = "";
+  if(cart.length === 0){
+    cartItemsDiv.innerHTML = "<p>No items in cart.</p>";
+  } else {
+    cart.forEach((item,index)=>{
+      const div = document.createElement("div");
+      div.className = "cart-item";
+      div.innerHTML = `
+        <img src="${item.img}" alt="${item.name}">
+        <div class="cart-item-details">
+          <h4>${item.name}</h4>
+          <p>₹${item.price.toLocaleString()} x ${item.quantity}</p>
+        </div>
+        <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+      `;
+      cartItemsDiv.appendChild(div);
+    });
+  }
+  updateTotal();
+  updateCartCount();
+}
+
+function removeItem(i){
+  cart.splice(i,1);
+  localStorage.setItem("cart", JSON.stringify(cart));
+  renderCart();
+}
+
+function updateTotal(){
+  const total = cart.reduce((sum,item)=>sum + item.price*item.quantity,0);
+  document.getElementById("totalPrice").innerText = "Total: ₹" + total.toLocaleString();
+}
+
+function updateCartCount(){
+  const count = cart.reduce((sum,item)=>sum+item.quantity,0);
+  document.getElementById("cartCount").innerText = count;
+}
+
+// Proceed to checkout
+document.getElementById("checkoutBtn").addEventListener("click", ()=>{
+  if(cart.length===0){ 
+    alert("Cart is empty!"); 
+    return; 
+  }
+
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const email = document.getElementById("email").value.trim();   // <-- email
+  const address = document.getElementById("address").value.trim();
+
+  if(!name || !phone || !email || !address){   // validate all
+    alert("⚠️ Please fill all customer information fields.");
+    return;
+  }
+
+  // Save customer info including email
+  localStorage.setItem("customerInfo", JSON.stringify({name, phone, email, address}));
+
+  // Prepare order for order-confirm page
+  const order = {
+    shopName: "ShopSmart",
+    dateTime: new Date().toLocaleString(),
+    payment: "Cash on Delivery",
+    cart: cart,
+    total: cart.reduce((sum,item)=>sum + item.price*item.quantity,0)
+  };
+
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+  orders.push(order);
+  localStorage.setItem("orders", JSON.stringify(orders));
+
+  // Redirect to order-confirm page
+  window.location.href="order-confirm.html";
+});
+
+renderCart();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | ShopSmart</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background: linear-gradient(135deg,#007BFF,#00C6FF); display:flex; justify-content:center; align-items:center; height:100vh; color:#333; }
+
+/* Auth Container */
+.auth-container {
+  background:#fff; padding:40px 30px; border-radius:25px; width:320px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.15); text-align:center; transition: transform 0.3s;
+}
+.auth-container:hover { transform: translateY(-5px); }
+.auth-container h1 { margin-bottom:25px; font-size:28px; color:#007BFF; }
+.auth-container input {
+  width:100%; padding:12px; margin-bottom:15px; border-radius:10px; border:1px solid #ccc;
+  font-size:16px; transition: border-color 0.3s, box-shadow 0.3s;
+}
+.auth-container input:focus { border-color:#007BFF; box-shadow:0 0 5px rgba(0,123,255,0.5); outline:none; }
+
+/* Button */
+button {
+  width:100%; padding:12px; border:none; border-radius:50px;
+  background: linear-gradient(135deg,#ff6600,#ffcc00); color:#fff; font-weight:bold; font-size:16px;
+  cursor:pointer; box-shadow:0 5px 15px rgba(0,0,0,0.2); transition: all 0.3s;
+}
+button:hover { background: linear-gradient(135deg,#ffcc00,#ff6600); transform: scale(1.05); }
+
+/* Footer text */
+p { margin-top:15px; font-size:14px; color:#333; }
+p a { color:#007BFF; text-decoration:none; font-weight:bold; transition:0.3s; }
+p a:hover { color:#ff6600; text-decoration:underline; }
+
+/* Responsive */
+@media(max-width:400px){
+  .auth-container { width:90%; padding:30px 20px; }
+  .auth-container h1 { font-size:24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="auth-container">
+  <h1>Login 🛒</h1>
+  <input type="email" id="loginEmail" placeholder="Email" required>
+  <input type="password" id="loginPassword" placeholder="Password" required>
+  <button id="loginBtn">Login</button>
+  <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+</div>
+
+<script>
+document.getElementById("loginBtn").addEventListener("click", ()=>{
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value.trim();
+  
+  if(!email || !password){
+    alert("⚠️ Please fill all fields.");
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  let user = users.find(u=>u.email===email && u.password===password);
+  
+  if(user){
+    localStorage.setItem("loggedInUser", JSON.stringify(user));
+    alert("✅ Login successful!");
+    window.location.href="profile.html";
+  } else {
+    alert("❌ Invalid email or password!");
+  }
+});
+</script>
+
+</body>
+</html>

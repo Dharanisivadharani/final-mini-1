@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile | ShopSmart</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background:#f0f2f5; color:#333; }
+
+/* Header */
+header {
+  display:flex; justify-content:space-between; align-items:center; padding:15px 50px;
+  background:linear-gradient(90deg,#007BFF,#00C6FF); color:#fff; box-shadow:0 5px 15px rgba(0,0,0,0.2); border-bottom-left-radius:20px; border-bottom-right-radius:20px;
+}
+.logo { font-size:28px; font-weight:bold; color:#fff; cursor:pointer; transition:0.3s; }
+.logo:hover { color:#ffe600; }
+nav ul { list-style:none; display:flex; gap:25px; }
+nav ul li a { text-decoration:none; color:#fff; font-weight:600; transition:0.3s; }
+nav ul li a:hover { color:#ffe600; }
+.user-icon { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:bold; margin-left:10px; cursor:pointer; transition:0.3s; }
+.user-icon.profile { background:linear-gradient(135deg,#ff6600,#ffcc00); color:#fff; }
+.user-icon.cart { background:linear-gradient(135deg,#00c6ff,#007BFF); color:#fff; }
+
+/* Profile Container */
+.profile-container {
+  max-width:900px; margin:50px auto; background:#fff; padding:40px; border-radius:25px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.15); transition:transform 0.3s;
+}
+.profile-container:hover { transform:translateY(-5px); }
+
+.profile-container h2 { text-align:center; color:#007BFF; margin-bottom:30px; font-size:32px; }
+.user-details p { font-size:18px; margin:10px 0; }
+
+/* Buttons */
+.logout-btn {
+  background:linear-gradient(135deg,#ff6600,#ffcc00); color:#fff; border:none; padding:12px 28px;
+  border-radius:50px; cursor:pointer; font-weight:bold; display:block; margin:30px auto 0; font-size:16px;
+  box-shadow:0 5px 15px rgba(0,0,0,0.2); transition:all 0.3s;
+}
+.logout-btn:hover { background:linear-gradient(135deg,#ffcc00,#ff6600); transform:scale(1.05); }
+
+/* Cart Items */
+.cart-section { margin-top:40px; }
+.cart-section h3 { color:#007BFF; margin-bottom:20px; font-size:24px; text-align:center; }
+.cart-item { display:flex; align-items:center; gap:15px; padding:12px; border-radius:15px; margin-bottom:15px;
+  background:linear-gradient(135deg,#e0f7ff,#ffffff); box-shadow:0 5px 15px rgba(0,0,0,0.1); transition:transform 0.3s;
+}
+.cart-item:hover { transform:translateY(-5px); }
+.cart-item img { width:90px; height:90px; object-fit:cover; border-radius:15px; }
+.cart-item-details h4 { margin:0; font-size:18px; color:#007BFF; }
+.cart-item-details p { margin:5px 0; font-weight:bold; color:#ff6600; }
+
+/* Responsive */
+@media(max-width:768px){
+  header { flex-direction:column; gap:15px; }
+  nav ul { flex-wrap:wrap; justify-content:center; gap:15px; }
+  .profile-container { padding:25px; margin:30px 15px; }
+  .cart-item { flex-direction:column; text-align:center; }
+  .cart-item img { margin-bottom:10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" onclick="location.href='index.html'">ShopSmart</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+  <div style="display:flex; align-items:center;">
+    <div class="user-icon profile">U</div>
+    <div class="user-icon cart" onclick="location.href='cart.html'">🛒 <span id="cartCount">0</span></div>
+  </div>
+</header>
+
+<div class="profile-container">
+  <h2>Your Profile</h2>
+  <div class="user-details">
+    <p><strong>Name:</strong> <span id="userName"></span></p>
+    <p><strong>Email:</strong> <span id="userEmail"></span></p>
+    <p><strong>Account Type:</strong> <span id="userType"></span></p>
+  </div>
+
+  <div class="cart-section">
+    <h3>Your Cart Items</h3>
+    <div id="cartItems">
+      <!-- Cart products injected via JS -->
+    </div>
+  </div>
+
+  <button class="logout-btn" id="logoutBtn">Logout</button>
+</div>
+
+<script>
+// Get logged-in user
+const user = JSON.parse(localStorage.getItem("loggedInUser"));
+if(!user){
+  alert("Please login first!");
+  window.location.href="login.html";
+} else {
+  document.getElementById("userName").innerText = user.name;
+  document.getElementById("userEmail").innerText = user.email;
+  document.getElementById("userType").innerText = user.accountType;
+}
+
+// Show cart items
+const cartItemsDiv = document.getElementById("cartItems");
+const cart = JSON.parse(localStorage.getItem("cart")) || [];
+if(cart.length === 0){
+    cartItemsDiv.innerHTML = "<p>No items in your cart.</p>";
+} else {
+    cart.forEach(item=>{
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+            <img src="${item.img}" alt="${item.name}">
+            <div class="cart-item-details">
+                <h4>${item.name}</h4>
+                <p>₹${item.price.toLocaleString()} x ${item.quantity}</p>
+            </div>
+        `;
+        cartItemsDiv.appendChild(div);
+    });
+}
+
+// Update navbar cart count
+function updateCartCount(){
+    const count = cart.reduce((total,item)=>total+item.quantity,0);
+    document.querySelector(".user-icon.cart span").innerText = count;
+}
+updateCartCount();
+
+// Logout
+document.getElementById("logoutBtn").addEventListener("click",()=>{
+    localStorage.removeItem("loggedInUser");
+    alert("Logged out successfully!");
+    window.location.href="login.html";
+});
+</script>
+
+</body>
+</html>
